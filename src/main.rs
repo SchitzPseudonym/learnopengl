@@ -9,17 +9,27 @@ fn main() {
     let event_loop = winit::event_loop::EventLoopBuilder::new().build().unwrap();
     let (window, display) = glium::backend::glutin::SimpleWindowBuilder::new().build(&event_loop);
 
-    glium::implement_vertex!(Vec3, position);
+    glium::implement_vertex!(Vec3, position, tex_coords);
 
     // Example Triangle
     let vertices = vec![
-        Vec3 { position: [0.5, -0.5, 0.0]}, // Bottom Right
-        Vec3 { position: [-0.5,  -0.5, 0.0]}, // Bottom Left
-        Vec3 { position: [0.0, 0.5, 0.0]}, // Top
+        Vec3 { position: [0.5, 0.5, 0.0], tex_coords: [1.0, 1.0]}, //Top Right
+        Vec3 { position: [0.5, -0.5, 0.0], tex_coords: [1.0, 0.0]}, //Bottom Right
+        Vec3 { position: [-0.5, -0.5, 0.0], tex_coords: [0.0, 0.0]}, //Bottom Left
+        Vec3 { position: [-0.5, 0.5, 0.0], tex_coords: [0.0, 1.0]}, //Top Left
     ];
+
     let indeces: Vec<u32> = vec![
         0, 1, 2,
+        0, 3, 2
     ];
+    
+    let texture =
+    match glium::texture::Texture2d::new(&display,renderer::load_png("assets/Salsa Water.png", image::ImageFormat::Png))
+    {
+        Ok(data) => data,
+        Err(err) => panic!("Problem glium::texture::Texture2d::new \n{:?}", err),
+    };
 
     // Buffers
     let vertex_buffer = glium::VertexBuffer::new(&display, &vertices).unwrap();
@@ -40,7 +50,7 @@ fn main() {
                     let mut target: glium::Frame = display.draw();
                     target.clear_color(0.0, 0.0, 0.0, 1.0);
                     
-                    let uniforms = renderer::render_loop(&time_start, delta, &window);
+                    let uniforms = renderer::render_loop(&time_start, delta, &window, &texture);
                     target.draw(&vertex_buffer, &index_buffer, &shader_program, &uniforms, &Default::default()).unwrap();
                     
                     target.finish().unwrap();

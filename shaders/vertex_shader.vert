@@ -1,12 +1,15 @@
 #version 330 core
 
 in vec3 position; // the position variable has attribute position 0
-in vec3 color;
+in vec2 tex_coords;
+//in vec3 color;
 
-out vec3 poscolor;
+out vec3 ourColor;
+out vec2 TexCoords;
 
 void main()
 {
-    poscolor = position;
-    gl_Position = vec4(position, 1.0); // see how we directly give a vec3 to vec4's constructor
+    gl_Position = vec4(position, 1.0);
+    TexCoords = tex_coords;
+    //ourColor = aColor;
 }

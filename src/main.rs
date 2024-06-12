@@ -24,11 +24,15 @@ fn main() {
         0, 3, 2
     ];
     
-    let texture =
-    match glium::texture::Texture2d::new(&display,renderer::load_png("assets/Salsa Water.png", image::ImageFormat::Png))
-    {
+
+    let images = vec![
+        renderer::load_png("assets/Salsa Water.png", image::ImageFormat::Png),
+        renderer::load_png("assets/Fuck it we ball.png", image::ImageFormat::Png)
+    ];
+
+    let texture_array = match glium::texture::Texture2dArray::new(&display, images) {
         Ok(data) => data,
-        Err(err) => panic!("Problem glium::texture::Texture2d::new \n{:?}", err),
+        Err(err) => panic!("Problem glium::texture::Texture2dArray::new \n{:?}", err),
     };
 
     // Buffers
@@ -50,7 +54,7 @@ fn main() {
                     let mut target: glium::Frame = display.draw();
                     target.clear_color(0.0, 0.0, 0.0, 1.0);
                     
-                    let uniforms = renderer::render_loop(&time_start, delta, &window, &texture);
+                    let uniforms = renderer::render_loop(&time_start, delta, &window, &texture_array);
                     target.draw(&vertex_buffer, &index_buffer, &shader_program, &uniforms, &Default::default()).unwrap();
                     
                     target.finish().unwrap();

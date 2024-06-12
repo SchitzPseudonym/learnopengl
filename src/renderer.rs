@@ -9,14 +9,14 @@ pub fn render_loop<'a>(
     time_start: &'a std::time::Instant, 
     delta: f32,
     window: &'a winit::window::Window,
-    texture: &'a glium::texture::Texture2d
+    texture_array: &'a glium::texture::Texture2dArray
 ) -> impl glium::uniforms::Uniforms + 'a
 {
     // let window_size = window.outer_size();
     // let running = ((time_start.elapsed().as_millis() as f32) * 0.001).sin();
 
     return glium::uniform! {
-        our_texture: texture,
+        texture_array: texture_array,
     };
 }
 

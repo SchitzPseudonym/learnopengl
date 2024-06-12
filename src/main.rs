@@ -1,6 +1,7 @@
 #![allow(unused_variables, unused_mut)]
 
 mod renderer;
+use glium::Surface;
 use renderer::Vec3;
 
 fn main() {
@@ -35,8 +36,15 @@ fn main() {
         match event {
             winit::event::Event::WindowEvent { event, .. } => match event {
                 winit::event::WindowEvent::RedrawRequested => {
-                    // Reset Frame
-                    time_last = renderer::render_loop(&time_start, &time_last, &window, &display, &vertex_buffer, &index_buffer, &shader_program);
+                    let delta: f32 = time_last.elapsed().as_nanos() as f32 * 0.0000001;
+                    let mut target: glium::Frame = display.draw();
+                    target.clear_color(0.0, 0.0, 0.0, 1.0);
+                    
+                    let uniforms = renderer::render_loop(&time_start, delta, &window);
+                    target.draw(&vertex_buffer, &index_buffer, &shader_program, &uniforms, &Default::default()).unwrap();
+                    
+                    target.finish().unwrap();
+                    time_last = std::time::Instant::now();
                 }
                 winit::event::WindowEvent::Resized(window_size) => {
                     display.resize(window_size.into());

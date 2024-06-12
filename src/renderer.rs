@@ -2,6 +2,7 @@
 pub struct Vec3 {
     pub position: [f32; 3],
     pub tex_coords: [f32; 2],
+    pub color: [f32; 3],
 }
 
 pub fn render_loop<'a>(
@@ -12,10 +13,9 @@ pub fn render_loop<'a>(
 ) -> impl glium::uniforms::Uniforms + 'a
 {
     // let window_size = window.outer_size();
-    let running = ((time_start.elapsed().as_millis() as f32) * 0.001).sin();
+    // let running = ((time_start.elapsed().as_millis() as f32) * 0.001).sin();
 
     return glium::uniform! {
-        running_time: running,
         our_texture: texture,
     };
 }

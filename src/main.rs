@@ -9,14 +9,14 @@ fn main() {
     let event_loop = winit::event_loop::EventLoopBuilder::new().build().unwrap();
     let (window, display) = glium::backend::glutin::SimpleWindowBuilder::new().build(&event_loop);
 
-    glium::implement_vertex!(Vec3, position, tex_coords);
+    glium::implement_vertex!(Vec3, position, tex_coords, color);
 
     // Example Triangle
     let vertices = vec![
-        Vec3 { position: [0.5, 0.5, 0.0], tex_coords: [1.0, 1.0]}, //Top Right
-        Vec3 { position: [0.5, -0.5, 0.0], tex_coords: [1.0, 0.0]}, //Bottom Right
-        Vec3 { position: [-0.5, -0.5, 0.0], tex_coords: [0.0, 0.0]}, //Bottom Left
-        Vec3 { position: [-0.5, 0.5, 0.0], tex_coords: [0.0, 1.0]}, //Top Left
+        Vec3 { position: [0.5, 0.5, 0.0], tex_coords: [1.0, 1.0], color: [1.0, 0.0, 0.0]}, //Top Right
+        Vec3 { position: [0.5, -0.5, 0.0], tex_coords: [1.0, 0.0], color: [0.0, 1.0, 0.0]}, //Bottom Right
+        Vec3 { position: [-0.5, -0.5, 0.0], tex_coords: [0.0, 0.0], color: [0.0, 0.0, 1.0]}, //Bottom Left
+        Vec3 { position: [-0.5, 0.5, 0.0], tex_coords: [0.0, 1.0], color: [1.0, 1.0, 0.0]}, //Top Left
     ];
 
     let indeces: Vec<u32> = vec![

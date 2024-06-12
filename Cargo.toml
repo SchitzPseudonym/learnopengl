@@ -6,4 +6,4 @@ edition = "2021"
 [dependencies]
 glium = "0.34.0"
 winit = "0.29.15"
-norman = "0.0.4"
+image = "0.24"

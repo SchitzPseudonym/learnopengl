@@ -1,3 +1,5 @@
+pub const PI: f32 = std::f32::consts::PI;
+
 pub fn init_event_loop() -> winit::event_loop::EventLoop<()>
 {
     match winit::event_loop::EventLoopBuilder::new().build() { Ok(el) => return el, Err(err) => panic!("Problem glium::texture::Texture2dArray::new \n{:?}", err), };

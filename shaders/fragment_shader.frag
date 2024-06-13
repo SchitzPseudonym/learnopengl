@@ -10,5 +10,5 @@ void main()
 {
     vec4 texture1 = texture(texture_array, vec3(ftex_coords, 0));
     vec4 texture2 = texture(texture_array, vec3(ftex_coords, 1));
-    FragColor = texture1 * texture2;
+    FragColor = texture1 * texture2 * vec4(fcolor, 1.0);
 }

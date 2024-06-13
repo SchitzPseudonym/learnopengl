@@ -6,9 +6,8 @@ pub struct Vec3 {
 }
 
 pub fn render_loop<'a>(
-    time_start: &'a std::time::Instant, 
-    delta: f32,
-    window: &'a winit::window::Window,
+    _delta: &f32,
+    _window: &'a winit::window::Window,
     texture_array: &'a glium::texture::Texture2dArray
 ) -> impl glium::uniforms::Uniforms + 'a
 {

@@ -9,5 +9,3 @@ glium = "0.34.0"
 winit = "0.29.15"
 # Image Loading
 image = "0.24"
-# Linear Algebra
-nalgebra-glm = "0.3"

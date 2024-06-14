@@ -1,14 +1,12 @@
-#version 330 core
-out vec4 FragColor;
-
-in vec3 fcolor;
-in vec2 ftex_coords;
+#version 450 core
 
 uniform sampler2DArray texture_array;
 
+in vec2 tex_coordsf;
+
+out vec4 FragColor;
+
 void main()
 {
-    vec4 texture1 = texture(texture_array, vec3(ftex_coords, 0));
-    vec4 texture2 = texture(texture_array, vec3(ftex_coords, 1));
-    FragColor = texture1 * texture2 * vec4(fcolor, 1.0);
+    FragColor = texture(texture_array, vec3(tex_coordsf, 0));
 }

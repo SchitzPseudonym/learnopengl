@@ -71,15 +71,30 @@ impl Mat4
         ]};
     }
     //Look into right handed vs left handed coordinate systems
+    pub fn orthographic(left: f32, right: f32, top: f32, bottom: f32, near: f32, far: f32) -> Mat4
+    {
+        return Mat4 {data: [
+            [1.0/(right-left), 0.0,              0.0,            (right+left)/2.0],
+            [0.0,              1.0/(bottom-top), 0.0,            (bottom+top)/2.0],
+            [0.0,              0.0,              1.0/(far-near), near],
+            [0.0,              0.0,              0.0,            1.0],
+        ]};
+    }
     pub fn perspective(fov: f32, aspect: f32, znear: f32, zfar: f32) -> Mat4
     {
-        let f = 1.0 / (fov/2.0).tan();
-        return Mat4 {data:[
-            [f/aspect, 0.0, 0.0, 0.0],
-            [0.0, f, 0.0, 0.0],
-            [0.0, 0.0, (zfar+znear)/(znear-zfar), (2.0*zfar*znear)/(znear-zfar)],
-            [0.0, 0.0, -1.0, 0.0],
+        return Mat4 {data: [
+            [znear, 0.0, 0.0, 0.0],
+            [0.0, znear, 0.0, 0.0],
+            [0.0, 0.0, (zfar+znear), -zfar*znear],
+            [0.0, 0.0, 1.0, 0.0],
         ]}
+        // let f = 1.0 / (fov/2.0).tan();
+        // return Mat4 {data:[
+        //     [f/aspect, 0.0, 0.0, 0.0],
+        //     [0.0, f, 0.0, 0.0],
+        //     [0.0, 0.0, (zfar+znear)/(znear-zfar), (2.0*zfar*znear)/(znear-zfar)],
+        //     [0.0, 0.0, -1.0, 0.0],
+        // ]}
     }
 }
 impl Mul for Mat4

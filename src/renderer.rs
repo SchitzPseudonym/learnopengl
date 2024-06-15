@@ -9,20 +9,25 @@ pub struct MyVector3 {
 pub fn render_loop<'a>(
     time_running: u128,
     _delta: u128,
-    _window: &'a winit::window::Window,
+    window: &'a winit::window::Window,
     texture_array: &'a glium::texture::Texture2dArray
 ) -> impl glium::uniforms::Uniforms + 'a
 {
-    // let window_size = window.outer_size();
+    let window_size = window.outer_size();
     let mut transform = Mat4::new(1.0);
 
     // glm::mat4 proj = glm::perspective(glm::radians(45.0f), (float)width/(float)height, 0.1f, 100.0f);
     transform = transform * Mat4::transform((time_running as f32 / 1000.0) % (PI*2.0), Vec3::new(0.0, 0.0, 1.0), Vec3::new(0.5, 0.5, 0.5), Vec3::new(0.5, -0.5, 0.0));
+    
+    let orthographic = Mat4::orthographic(-1.0, 1.0, 1.0, -1.0, 0.1, 1000.0);
+    let perspective = Mat4::perspective(PI*0.5, (window_size.width/window_size.height) as f32, 0.1, 1000.0);
 
     return glium::uniform! {
         texture_array: texture_array,
         // transform: *transform.as_ref()
-        transform: transform.data
+        transform: transform.data,
+        orthographic: orthographic.data,
+        perspective: perspective.data
     };
 }
 
